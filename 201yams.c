@@ -47,20 +47,121 @@ char            **myTotab(char *str, char c)
   return (tabl);
 }
 
+int	checkHowManyTime(char **nbs, char *val)
+{
+  int	times;
+  int	i;
+
+  i = times = 0;
+  while (nbs[i] != NULL)
+    {
+      if (strcmp(nbs[i], val) == 0)
+	times++;
+      i++;
+    }
+  return (times);
+}
+
+int	fact(int nb)
+{
+  if (nb > 1)
+    return (nb * fact(nb - 1));
+}
 
 void	paire(char **nb, char **op)
 {
-  printf("paire\n");
+  int		times;
+  int		tmp;
+  int		x;
+  int		y;
+  double	a;
+  double	res;
+
+  times = checkHowManyTime(nb, op[1]);
+  tmp = times;
+  if (times == 2)
+    printf("la probabilite de faire un carre est de 100%");
+  else
+    {
+      a = 1.0 / 6.0;
+      tmp++;
+      while(tmp < 2)
+	{
+	  a = a *  1.0 / 6.0;
+	  tmp++;
+	}
+      x = 2 - times;
+      y = 5 - times;
+      res = (fact(y)) / (fact(x) * fact(y - x));
+      res *= a;
+      res = res - ((2 - 1) / (powf(6, 2)));
+      res *= 100;
+      printf("la probabilite de faire une paire de %s est de %.2f%\n", op[1], res);
+    }
 }
 
 void	brelan(char **nb, char **op)
 {
-  printf("brelan\n");
+  int		times;
+  int		tmp;
+  int		x;
+  int		y;
+  double	a;
+  double	res;
+
+  times = checkHowManyTime(nb, op[1]);
+  tmp = times;
+  if (times == 3)
+    printf("la probabilite de faire un carre est de 100%");
+  else
+    {
+      a = 1.0 / 6.0;
+      tmp++;
+      while(tmp < 3)
+	{
+	  a = a *  1.0 / 6.0;
+	  tmp++;
+	}
+      x = 3 - times;
+      y = 5 - times;
+      res = (fact(y)) / (fact(x) * fact(y - x));
+      res *= a;
+      res = res - ((3 - 1) / (powf(6, 3)));
+      res *= 100;
+      printf("la probabilite de faire un brelan de %s est de %.2f%\n", op[1], res);
+    }
 }
 
 void	carre(char **nb, char **op)
 {
-  printf("carre\n");
+  int		times;
+  int		tmp;
+  int		x;
+  int		y;
+  double	a;
+  double	res;
+
+  times = checkHowManyTime(nb, op[1]);
+  tmp = times;
+  if (times == 4)
+    printf("la probabilite de faire un carre est de 100%");
+  else
+    {
+      a = 1.0 / 6.0;
+      tmp++;
+      while(tmp < 4)
+	{
+	  a = a *  1.0 / 6.0;
+	  tmp++;
+	}
+      x = 4 - times;
+      y = 5 - times;
+      res = (fact(y)) / (fact(x) * fact(y - x));
+      res *= a;
+      res = res - ((4 - 1) / (powf(6, 4)));
+      res *= 100;
+      printf("la probabilite de faire un carre de %s est de %.2f%\n", op[1], res);
+    }
 }
 
 void	full(char **nb, char **op)
@@ -75,7 +176,27 @@ void	suite(char **nb, char **op)
 
 void	yams(char **nb, char **op)
 {
-  printf("yams\n");
+  int		times;
+  int		tmp;
+  double	a;
+  double	res;
+
+  times = checkHowManyTime(nb, op[1]);
+  tmp = times;
+  if (times == 5)
+    printf("la probabilite de faire un carre est de 100%");
+  else
+    {
+      a = 1.0 / 6.0;
+      tmp++;
+      while(tmp < 5)
+	{
+	  a = a *  1.0 / 6.0;
+	  tmp++;
+	}
+      res = a * 100;
+      printf("la probabilite de faire un carre de %s est de %.2f%\n", op[1], res);
+    }
 }
 
 void	sendToFunc(char **nb, char **op)
@@ -110,26 +231,30 @@ char	**getNumb(char **av)
 
 int	check_error(int ac, char **av)
 {
+  int	nb_zero;
   int	i = 1;
 
+  nb_zero = 0;
   if (ac != 7)
     {
       printf("Le nombre d'arguments doit etre egal a 6\n");
       return (1);
     }
-  while (i <= 4)
+  while (i <= 5)
     {
       if (atoi(av[i]) == 0)
-	{
-	  printf("Certains des n'ont pas ete lances\n");
-	  return (1);
-	}
+	nb_zero++;
       else if (atoi(av[i]) < 0 || atoi(av[i]) > 9)
 	{
 	  printf("Le nombre numero %d n'est pas un nombre entier\n", i);
 	  return (1);
 	}
       i++;
+    }
+  if (nb_zero != 5)
+    {
+      printf("certains des n'ont pas ete lances\n");
+      return (1);
     }
   return (0);
 }
