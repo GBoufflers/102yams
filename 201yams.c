@@ -80,7 +80,7 @@ void	paire(char **nb, char **op)
   times = checkHowManyTime(nb, op[1]);
   tmp = times;
   if (times == 2)
-    printf("la probabilite de faire un carre est de 100%");
+    printf("la probabilite de faire un carre est de 100%%\n");
   else
     {
       a = 1.0 / 6.0;
@@ -96,7 +96,7 @@ void	paire(char **nb, char **op)
       res *= a;
       res = res - ((2 - 1) / (powf(6, 2)));
       res *= 100;
-      printf("la probabilite de faire une paire de %s est de %.2f%\n", op[1], res);
+      printf("la probabilite de faire une paire de %s est de %.2f%%\n", op[1], res);
     }
 }
 
@@ -112,7 +112,7 @@ void	brelan(char **nb, char **op)
   times = checkHowManyTime(nb, op[1]);
   tmp = times;
   if (times == 3)
-    printf("la probabilite de faire un carre est de 100%");
+    printf("la probabilite de faire un carre est de 100%%");
   else
     {
       a = 1.0 / 6.0;
@@ -128,7 +128,7 @@ void	brelan(char **nb, char **op)
       res *= a;
       res = res - ((3 - 1) / (powf(6, 3)));
       res *= 100;
-      printf("la probabilite de faire un brelan de %s est de %.2f%\n", op[1], res);
+      printf("la probabilite de faire un brelan de %s est de %.2f%%\n", op[1], res);
     }
 }
 
@@ -144,7 +144,7 @@ void	carre(char **nb, char **op)
   times = checkHowManyTime(nb, op[1]);
   tmp = times;
   if (times == 4)
-    printf("la probabilite de faire un carre est de 100%");
+    printf("la probabilite de faire un carre est de 100%%");
   else
     {
       a = 1.0 / 6.0;
@@ -160,18 +160,77 @@ void	carre(char **nb, char **op)
       res *= a;
       res = res - ((4 - 1) / (powf(6, 4)));
       res *= 100;
-      printf("la probabilite de faire un carre de %s est de %.2f%\n", op[1], res);
+      printf("la probabilite de faire un carre de %s est de %.2f%%\n", op[1], res);
     }
 }
 
 void	full(char **nb, char **op)
 {
-  printf("full\n");
+  int	i = 0;
+  int	de = 0;
+  int	de1 = 2;
+  int	de2 = 3;
+  double	pourcent;
+
+  while (nb[i] != NULL)
+    {
+      if (nb[i] == op[1])
+	de1 -= 1;
+      if (de1 == 0)
+	break;
+      i += 1;
+    }
+  i = 0;
+  while (nb[i] != NULL)
+    {
+      if (nb[i] == op[2])
+	de2 -= 1;
+      if (de2 == 0)
+	break;
+      i += 1;
+    }
+  if (de1 > de2)
+    pourcent = fact(5 - (2 - de1) - (3 - de2)) / (fact(de1) * fact(5 - (2 - de1) - (3 - de2) - de1));
+  else
+    pourcent = fact(5 - (2 - de1) - (3 - de2)) / (fact(de2) * fact(5 - (2 - de1) - (3 - de2) - de2));
+  de = de1 + de2;
+  while (de > 0)
+    {
+      pourcent = pourcent * (1.0 / 6.0);
+      de -= 1;      
+    }
+  printf("Le probabilte d'un full est de %.2f%%\n" , pourcent * 100);
 }
 
 void	suite(char **nb, char **op)
 {
-  printf("suite\n");
+  int	i = 0;
+  int	j = 0;
+  double ret = 0;;
+
+  if (atoi(op[1]) == 6)
+    {
+      while (nb[i] != NULL)
+	{
+	  if (atoi(nb[i]) > 1 && atoi(nb[i]) <= 6)
+	    j += 1;
+	  i += 1;
+	}
+    }
+  if (atoi(op[1]) == 5)
+    {
+      while (nb[i] != NULL)
+	{
+	  if (atoi(nb[i]) > 0 && atoi(nb[i]) <= 5)
+	    j += 1;
+	  i += 1;
+	}
+    }
+  if (j == 0)
+    ret = (1 / pow(6, 5)) * fact(5) * 100;
+  else
+    ret = (1 / pow(6, (5 - j))) * fact(5 -j) * 100;
+  printf("La probabilite de faire une suite est de %.2f%%\n", ret);
 }
 
 void	yams(char **nb, char **op)
@@ -184,7 +243,7 @@ void	yams(char **nb, char **op)
   times = checkHowManyTime(nb, op[1]);
   tmp = times;
   if (times == 5)
-    printf("la probabilite de faire un carre est de 100%");
+    printf("la probabilite de faire un carre est de 100%%");
   else
     {
       a = 1.0 / 6.0;
@@ -195,7 +254,7 @@ void	yams(char **nb, char **op)
 	  tmp++;
 	}
       res = a * 100;
-      printf("la probabilite de faire un carre de %s est de %.2f%\n", op[1], res);
+      printf("la probabilite de faire un carre de %s est de %.2f%%\n", op[1], res);
     }
 }
 
